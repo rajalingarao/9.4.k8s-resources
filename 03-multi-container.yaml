@@ -1,30 +1,3 @@
-kind: Pod
-apiVersion: v1
-metadata:
-  name: multi-container
-spec:
-  containers:
-  - name: nginx
-    image: nginx
-  - name: alma
-    image: "almalinux:9"
-    command: ["sleep"," 2000" ]
-
-  #We will test using curl localhost in both containers.
-# kubectl describe pod multi-container
-# nginx container logs
-# kubectl logs multi-container -c nginx
-# alma container logs
-# kubectl logs multi-container -c alma
-
-# Enter nginx container
-# kubectl exec -it multi-container -c nginx -- /bin/bash
-
-# (Use /bin/sh if bash is unavailable.)
-# Enter alma container
-# kubectl exec -it multi-container -c alma -- /bin/bash
-
-# How to prove multiple containers in a pod share storage and network?
 # kind: Pod
 # apiVersion: v1
 # metadata:
@@ -33,20 +6,87 @@ spec:
 #   containers:
 #   - name: nginx
 #     image: nginx
-#     volumeMounts:
-#       - name: shared-volume
-#         mountPath: /hello-dir
 #   - name: alma
-#     image: almalinux:9
-#     command: ["sleep", "2000"]
-#     volumeMounts:
-#       - name: shared-volume
-#         mountPath: /hello-dir
-#   volumes:
-#     - name: shared-volume
-#       emptyDir: {}
+#     image: "almalinux:9"
+#     command: ["sleep"," 2000" ]
 
-#kubectl exec multi-container -c alma -- cat /hello-dir/hello.txt
+# kubectl apply -f 03-multi-container.yaml
+# kubectl get pods
+# kubectl describe pod multi-container
+
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: multi-container
+spec:
+  volumes:
+  - name: shared-volume
+    emptyDir: {}
+
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - name: shared-volume
+      mountPath: /shared
+
+  - name: alma
+    image: almalinux:9
+    command: ["sleep","2000"]
+    volumeMounts:
+    - name: shared-volume
+      mountPath: /shared
+
+
+# To prove shared storage between containers in the same Pod, you need to:
+# Create a shared volume (emptyDir is simplest)
+# Mount it in both containers
+# Write a file from one container
+# Read it from the other container
+
+
+# kubectl apply -f 03-multi-container.yaml
+# kubectl get pods
+
+# Step 1: Create a file from nginx container
+# kubectl exec -it multi-container -c nginx -- /bin/bash
+# Inside container:
+# echo "shared storage working" > /data/test.txt
+# cat /data/test.txt
+# exit
+
+# Step 2: Read the same file from alma container
+# kubectl exec -it multi-container -c alma -- /bin/bash
+# Inside container:
+# cat /data/test.txt
+
+# This proves both containers are using the same shared storage volume.
+
+
+# Step 1: Get Pod IP
+# kubectl get pod multi-container -o wide
+# Both containers use this same Pod IP.
+
+
+
+# Step 2: Access nginx from alma using localhost
+# Enter alma container:
+# kubectl exec -it multi-container -c alma -- /bin/bash
+
+# Install curl temporarily:
+# dnf install -y curl
+
+# Now access nginx running in the other container:
+# curl localhost
+
+# You should see nginx HTML output like:
+# Welcome to nginx!
+
+# This proves:
+# both containers share the same network namespace
+# localhost communication works inside the Pod
+
 # How do you prove both containers share same network?
 # kubectl exec -it multi-container -c nginx -- hostname -i
 # kubectl exec -it multi-container -c alma -- hostname -i
