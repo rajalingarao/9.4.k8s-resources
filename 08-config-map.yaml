@@ -7,3 +7,8 @@ data:
   trainer: "sivakumar"
   github: "https://github.com/linga-daws-78s/k8-resources/"
   
+
+
+# kubectl apply -f 08-config-map.yaml
+# kubectl get configmap
+# kubectl describe configmap daws78s

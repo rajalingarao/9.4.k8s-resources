@@ -12,3 +12,7 @@ spec:
     - name: duration
       value: '20hours'
       
+
+# kubectl apply -f 06-env.yaml
+# kubectl get pods
+# kubectl describe pod env-test

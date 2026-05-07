@@ -31,3 +31,7 @@ spec:
 # Pod labels must match all keys in matchLabels	✅ Required
 # Pod can have extra labels beyond matchLabels	✅ Allowed
 # If Pod misses any selector label, ReplicaSet won't manage it	❌ Not allowed
+
+# kubectl apply -f 16-replicatset.yaml
+# kubectl get replicatset
+# kubectl describe replicaset nginx

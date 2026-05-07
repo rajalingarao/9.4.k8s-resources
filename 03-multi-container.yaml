@@ -1,18 +1,3 @@
-# kind: Pod
-# apiVersion: v1
-# metadata:
-#   name: multi-container
-# spec:
-#   containers:
-#   - name: nginx
-#     image: nginx
-#   - name: alma
-#     image: "almalinux:9"
-#     command: ["sleep"," 2000" ]
-
-  #We will test using curl localhost in both containers.
-
-# How to prove multiple containers in a pod share storage and network?
 kind: Pod
 apiVersion: v1
 metadata:
@@ -21,18 +6,45 @@ spec:
   containers:
   - name: nginx
     image: nginx
-    volumeMounts:
-      - name: shared-volume
-        mountPath: /hello-dir
   - name: alma
-    image: almalinux:9
-    command: ["sleep", "2000"]
-    volumeMounts:
-      - name: shared-volume
-        mountPath: /hello-dir
-  volumes:
-    - name: shared-volume
-      emptyDir: {}
+    image: "almalinux:9"
+    command: ["sleep"," 2000" ]
+
+  #We will test using curl localhost in both containers.
+# kubectl describe pod multi-container
+# nginx container logs
+# kubectl logs multi-container -c nginx
+# alma container logs
+# kubectl logs multi-container -c alma
+
+# Enter nginx container
+# kubectl exec -it multi-container -c nginx -- /bin/bash
+
+# (Use /bin/sh if bash is unavailable.)
+# Enter alma container
+# kubectl exec -it multi-container -c alma -- /bin/bash
+
+# How to prove multiple containers in a pod share storage and network?
+# kind: Pod
+# apiVersion: v1
+# metadata:
+#   name: multi-container
+# spec:
+#   containers:
+#   - name: nginx
+#     image: nginx
+#     volumeMounts:
+#       - name: shared-volume
+#         mountPath: /hello-dir
+#   - name: alma
+#     image: almalinux:9
+#     command: ["sleep", "2000"]
+#     volumeMounts:
+#       - name: shared-volume
+#         mountPath: /hello-dir
+#   volumes:
+#     - name: shared-volume
+#       emptyDir: {}
 
 #kubectl exec multi-container -c alma -- cat /hello-dir/hello.txt
 # How do you prove both containers share same network?

@@ -9,3 +9,9 @@ spec:
   containers:
   - name: nginx
     image: nginx
+
+
+# kubectl apply -f 04-labels.yaml
+# kubectl get pods
+# kubectl describe pod labels
+

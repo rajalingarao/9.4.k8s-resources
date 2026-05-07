@@ -3,6 +3,14 @@
 Namespace, pod, mutli-containers, labels, annotations, env, resource limits, configmap, pod-configmap, secret, pod-secrets, config-as-file-volume, secret-as-file-volume, cluster, node-port, load balancer, nginx-pod, replicatset, deployment. 
 
 
+kubectl apply -f 01-namespace.yaml
+kubectl get ns expense
+kubectl decribe ns expense
+
+
+
+
+
 
 # Kubernetes Objects:
 Pod

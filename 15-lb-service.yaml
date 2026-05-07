@@ -17,3 +17,6 @@ spec:
     nodePort: 32761
 
 #Note:  all labels values of selector from service need to match with pod label values. Pod can contain additional values, but service.
+# kubectl apply -f 15-lb-service.yaml
+# kubectl get svc
+# kubectl describe svc nginx-lb

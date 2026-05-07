@@ -16,4 +16,6 @@ spec:
         memory: "1Gi"
         cpu: "500m"
     
-
+# kubectl apply -f 07-resources.yaml
+# kubectl get pods
+# kubectl describe pod resources

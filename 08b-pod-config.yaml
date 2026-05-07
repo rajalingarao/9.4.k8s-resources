@@ -22,3 +22,7 @@ spec:
             configMapKeyRef:
               name: daws78s
               key: github
+
+# kubectl apply -f 08b-pod-config.yaml
+# kubectl get pod-config-individual
+# kubectl describe pod pod-config-individual

@@ -12,3 +12,8 @@ spec:
   containers:
   - name: nginx
     image: nginx
+
+
+# kubectl apply -f 05-annotations.yaml
+# kubectl get pods
+# kubectl describe pod annotations

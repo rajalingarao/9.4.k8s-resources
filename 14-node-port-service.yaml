@@ -17,3 +17,8 @@ spec:
     nodePort: 32760 # Here is fixed nodeport value.
 
 #Note:  all labels values of selector from service need to match with pod label values. Pod can contain additional values, but service.
+
+
+# kubectl apply -f 14-node-port-service.yaml
+# kubectl get svc
+# kubectl describe svc nginx-np
