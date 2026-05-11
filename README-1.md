@@ -7,11 +7,6 @@ kubectl apply -f 01-namespace.yaml
 kubectl get ns expense
 kubectl decribe ns expense
 
-
-
-
-
-
 # Kubernetes Objects:
 Pod
 Namespace

@@ -52,14 +52,15 @@ spec:
 # Step 1: Create a file from nginx container
 # kubectl exec -it multi-container -c nginx -- /bin/bash
 # Inside container:
-# echo "shared storage working" > /data/test.txt
-# cat /data/test.txt
+# echo "shared storage working" > /shared/test.txt
+# mkdir data
+# cat /shared/test.txt
 # exit
 
 # Step 2: Read the same file from alma container
 # kubectl exec -it multi-container -c alma -- /bin/bash
 # Inside container:
-# cat /data/test.txt
+# cat /shared/test.txt
 
 # This proves both containers are using the same shared storage volume.
 
